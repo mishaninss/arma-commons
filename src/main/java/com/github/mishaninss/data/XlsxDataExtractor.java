@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 Sergey Mishanin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -65,14 +64,14 @@ public class XlsxDataExtractor {
 
     public static List<List<String>> extractDataAsList(File file, String... ignoredColumnNames) throws IOException {
         if (!file.exists()){
-            throw new IOException("Cannot load com.github.data from file [" + file.getCanonicalPath() + "]. File doesn't exist");
+            throw new IOException("Cannot load data from file [" + file.getCanonicalPath() + "]. File doesn't exist");
         }
 
         List<List<String>> data = new ArrayList<>();
 
         try(FileInputStream fis = new FileInputStream(file)) {
             XSSFWorkbook myExcelBook = new XSSFWorkbook(fis);
-            XSSFSheet myExcelSheet = myExcelBook.getSheet("com/epam/data");
+            XSSFSheet myExcelSheet = myExcelBook.getSheet("data");
             Iterator<Row> rowIterator = myExcelSheet.rowIterator();
 
             while (rowIterator.hasNext()) {
