@@ -22,11 +22,13 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @PropertySource(value = "classpath:arma.properties", ignoreResourceNotFound = true)
-@ComponentScan("com.github")
+@ComponentScan("com.github.mishaninss")
 public class CommonsConfig {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        configurer.setTrimValues(true);
+        return configurer;
     }
 }
