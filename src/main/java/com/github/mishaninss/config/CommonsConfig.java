@@ -21,7 +21,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource(value = "classpath:taf.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "classpath:arma.properties", ignoreResourceNotFound = true)
 @ComponentScan("com.github")
 public class CommonsConfig {
 
