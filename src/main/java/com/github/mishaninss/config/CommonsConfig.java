@@ -17,12 +17,19 @@
 
 package com.github.mishaninss.config;
 
+import com.github.mishaninss.reporting.IReporter;
+import com.github.mishaninss.reporting.Slf4jReporter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @PropertySource(value = "classpath:arma.properties", ignoreResourceNotFound = true)
-@ComponentScan("com.github.mishaninss")
+@ComponentScan(value = "com.github.mishaninss",
+        excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ANNOTATION,
+                value = {Configuration.class})
+})
 public class CommonsConfig {
 
     @Bean
@@ -30,5 +37,10 @@ public class CommonsConfig {
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         configurer.setTrimValues(true);
         return configurer;
+    }
+
+    @Bean @Qualifier(IReporter.QUALIFIER)
+    public IReporter reporter(){
+        return new Slf4jReporter();
     }
 }
