@@ -20,11 +20,12 @@ package com.github.mishaninss.config;
 import com.github.mishaninss.reporting.IReporter;
 import com.github.mishaninss.reporting.Slf4jReporter;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource(value = "classpath:arma.properties", ignoreResourceNotFound = true)
+@PropertySource(value = {"classpath:arma.properties","classpath:${arma.config.file}"}, ignoreResourceNotFound = true)
 @ComponentScan(value = "com.github.mishaninss",
         excludeFilters = {
         @ComponentScan.Filter(type = FilterType.ANNOTATION,
