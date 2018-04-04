@@ -52,6 +52,11 @@ public class Slf4jReporter implements IReporter{
     }
 
     @Override
+    public void trace(String msg, Object... args) {
+        LOGGER.trace(msg, args);
+    }
+
+    @Override
     public void trace(String msg, Throwable e) {
         LOGGER.trace(msg, e);
     }
@@ -62,8 +67,18 @@ public class Slf4jReporter implements IReporter{
     }
 
     @Override
+    public void debug(String msg, Object... args) {
+        LOGGER.debug(msg, args);
+    }
+
+    @Override
     public void debug(String msg, Throwable e) {
         LOGGER.debug(msg, e);
+    }
+
+    @Override
+    public void info(String msg, Object... args) {
+        LOGGER.info(msg, args);
     }
 
     @Override
@@ -77,6 +92,11 @@ public class Slf4jReporter implements IReporter{
     }
 
     @Override
+    public void warn(String msg, Object... args) {
+        LOGGER.warn(msg, args);
+    }
+
+    @Override
     public void warn(String msg) {
         LOGGER.warn(msg);
     }
@@ -84,6 +104,11 @@ public class Slf4jReporter implements IReporter{
     @Override
     public void warn(String msg, Throwable e) {
         LOGGER.warn(msg, e);
+    }
+
+    @Override
+    public void error(String msg, Object... args) {
+        LOGGER.error(msg, args);
     }
 
     @Override
