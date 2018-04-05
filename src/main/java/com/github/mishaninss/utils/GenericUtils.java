@@ -17,9 +17,13 @@
 
 package com.github.mishaninss.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.TimeUnit;
 
 public class GenericUtils {
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenericUtils.class);
 	
 	private GenericUtils() {
 	}
@@ -32,7 +36,8 @@ public class GenericUtils {
 		try {
 			Thread.sleep(timeUnit.toMillis(timeout));
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			LOGGER.trace("Interrupted sleep", e);
+            Thread.currentThread().interrupt();
 		}
 	}
 	

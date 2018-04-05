@@ -41,7 +41,7 @@ public class XlsxDataExtractor {
 
     public static String[][] extractDataAsArray(File file, String... ignoredColumnNames) throws IOException {
         if (!file.exists()){
-            throw new IOException("Cannot load com.github.data from file [" + file.getCanonicalPath() + "]. File doesn't exist");
+            throw new IOException("Cannot load data from file [" + file.getCanonicalPath() + "]. File doesn't exist");
         }
 
         List<List<String>> dataList = extractDataAsList(file, ignoredColumnNames);
@@ -85,7 +85,7 @@ public class XlsxDataExtractor {
                         case STRING: value = cell.getStringCellValue(); break;
                         case NUMERIC: value = String.valueOf(cell.getNumericCellValue()); break;
                         case BOOLEAN: value = String.valueOf(cell.getBooleanCellValue()); break;
-                        default: System.out.println(cell.getCellTypeEnum());
+                        default: LOGGER.debug("Unknown cell type: {}", cell.getCellTypeEnum());
                     }
                     int colIndex = cell.getColumnIndex();
                     if (colIndex > rowValues.size()){

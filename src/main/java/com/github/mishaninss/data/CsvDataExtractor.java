@@ -46,7 +46,7 @@ public class CsvDataExtractor {
 
     public static Map<String, List<String>> extractData(String pathToFile) throws IOException {
         if (StringUtils.isBlank(pathToFile)){
-            throw new IllegalArgumentException("Path to com.github.data file cannot be empty");
+            throw new IllegalArgumentException("Path to data file cannot be empty");
         }
 
         URL locatorsUrl = CsvDataExtractor.class.getClassLoader().getResource(pathToFile);
@@ -94,7 +94,7 @@ public class CsvDataExtractor {
 
     public static String[][] extractDataAsArray(File file, String... ignoredColumnNames) throws IOException {
         if (!file.exists()){
-            throw new IOException("Cannot load com.github.data from file [" + file.getCanonicalPath() + "]. File doesn't exist");
+            throw new IOException("Cannot load data from file [" + file.getCanonicalPath() + "]. File doesn't exist");
         }
 
         List<List<String>> dataList = extractDataAsList(file, ignoredColumnNames);
