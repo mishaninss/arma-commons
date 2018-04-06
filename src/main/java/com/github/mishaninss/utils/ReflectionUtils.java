@@ -17,6 +17,8 @@
 
 package com.github.mishaninss.utils;
 
+import org.apache.commons.lang3.reflect.TypeUtils;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -80,6 +82,10 @@ public class ReflectionUtils {
         } catch (ClassNotFoundException ex) {
             return null;
         }
+    }
+
+    public static boolean isGenericType(Class<?> clazz){
+        return clazz.getTypeParameters().length > 0;
     }
 
     public static List<Class> getInnerClassesWithAnnotation(Class<?> clazz, Class<? extends Annotation> annotationClass){
