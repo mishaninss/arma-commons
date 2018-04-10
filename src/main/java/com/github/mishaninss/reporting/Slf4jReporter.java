@@ -19,9 +19,11 @@ package com.github.mishaninss.reporting;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
+@Primary
 public class Slf4jReporter implements IReporter{
     private static final Logger LOGGER = LoggerFactory.getLogger(Slf4jReporter.class);
     private static final String ATTACHMENTS_WARNING = "Attachments are not supported";

@@ -18,8 +18,8 @@
 package com.github.mishaninss.config;
 
 import com.github.mishaninss.reporting.IReporter;
+import com.github.mishaninss.reporting.Reporter;
 import com.github.mishaninss.reporting.Slf4jReporter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
@@ -39,7 +39,7 @@ public class CommonsConfig {
         return configurer;
     }
 
-    @Bean @Qualifier(IReporter.QUALIFIER)
+    @Bean(IReporter.QUALIFIER) @Reporter
     public IReporter reporter(){
         return new Slf4jReporter();
     }
