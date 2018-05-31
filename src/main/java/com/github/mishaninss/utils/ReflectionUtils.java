@@ -17,8 +17,6 @@
 
 package com.github.mishaninss.utils;
 
-import org.apache.commons.lang3.reflect.TypeUtils;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

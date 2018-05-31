@@ -20,6 +20,8 @@ package com.github.mishaninss.reporting;
 public interface IReporter {
     String QUALIFIER = "IReporter";
 
+    void setReporterName(String reporterName);
+
     void attachScreenshot(byte[] screenshot, String msg);
 
     void attachScreenshot(byte[] screenshot);
