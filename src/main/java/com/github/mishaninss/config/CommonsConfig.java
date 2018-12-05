@@ -20,27 +20,70 @@ package com.github.mishaninss.config;
 import com.github.mishaninss.reporting.IReporter;
 import com.github.mishaninss.reporting.Reporter;
 import com.github.mishaninss.reporting.Slf4jReporter;
-import org.springframework.context.annotation.*;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 @Configuration
-@PropertySource(value = {"classpath:arma.properties","classpath:${arma.config.file}"}, ignoreResourceNotFound = true)
 @ComponentScan(value = "com.github.mishaninss",
         excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ANNOTATION,
-                value = {Configuration.class})
-})
+                @ComponentScan.Filter(type = FilterType.ANNOTATION,
+                        value = {Configuration.class})
+        })
 public class CommonsConfig {
+    private static final String ARMA_PROPERTIES_FILE = "arma.properties";
+    private static final String ARMA_CONFIG_FILES_PROPERTY = "arma.config.files";
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         configurer.setTrimValues(true);
+        configurer.setIgnoreResourceNotFound(true);
+
+        List<Resource> configFiles = new ArrayList<>();
+        configFiles.add(new ClassPathResource(ARMA_PROPERTIES_FILE));
+        List<String> additionalFiles = getConfigFiles();
+        if (CollectionUtils.isNotEmpty(additionalFiles)){
+            additionalFiles.forEach(file -> {
+                if (StringUtils.isNotBlank(file)) {
+                    configFiles.add(new ClassPathResource(file));
+                }
+            });
+        }
+        configurer.setLocations(configFiles.toArray(new Resource[0]));
+
         return configurer;
     }
 
-    @Bean(IReporter.QUALIFIER) @Reporter
-    public IReporter reporter(){
+    private static List<String> getConfigFiles(){
+        String configFilesValue = System.getProperty(ARMA_CONFIG_FILES_PROPERTY);
+        if (StringUtils.isBlank(configFilesValue)){
+            try (InputStream is = CommonsConfig.class.getResourceAsStream("/" + ARMA_PROPERTIES_FILE)){
+                Properties armaProperties = new Properties();
+                armaProperties.load(is);
+                configFilesValue = armaProperties.getProperty(ARMA_CONFIG_FILES_PROPERTY);
+            } catch (Exception ex){
+                //IGNORE EXCEPTION
+            }
+        }
+        return configFilesValue == null ? null : Arrays.asList(configFilesValue.split(","));
+    }
+
+    @Bean(IReporter.QUALIFIER)
+    @Reporter
+    public IReporter reporter() {
         return new Slf4jReporter();
     }
 }
