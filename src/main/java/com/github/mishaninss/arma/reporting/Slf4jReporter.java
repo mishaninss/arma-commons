@@ -1,21 +1,4 @@
-/*
- *
- * Copyright 2018 Sergey Mishanin
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package com.github.mishaninss.reporting;
+package com.github.mishaninss.arma.reporting;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Primary
-public class Slf4jReporter implements IReporter{
+public class Slf4jReporter implements IReporter {
     private Logger logger = LoggerFactory.getLogger(Slf4jReporter.class);
-    private static final String ATTACHMENTS_WARNING = "Attachments are not supported";
+    private static final String ATTACHMENTS_WARNING = "Вложения не поддерживаются";
 
     @Override
-    public void setReporterName(String reporterName){
+    public void setReporterName(String reporterName) {
         logger = LoggerFactory.getLogger(reporterName);
     }
 
@@ -60,7 +43,10 @@ public class Slf4jReporter implements IReporter{
 
     @Override
     public void trace(String msg, Object... args) {
-        logger.trace(msg, args);
+        if (logger.isTraceEnabled()) {
+            String message = getMassage(msg, args);
+            logger.trace(message);
+        }
     }
 
     @Override
@@ -75,7 +61,10 @@ public class Slf4jReporter implements IReporter{
 
     @Override
     public void debug(String msg, Object... args) {
-        logger.debug(msg, args);
+        if (logger.isDebugEnabled()) {
+            String message = getMassage(msg, args);
+            logger.debug(message);
+        }
     }
 
     @Override
@@ -85,7 +74,10 @@ public class Slf4jReporter implements IReporter{
 
     @Override
     public void info(String msg, Object... args) {
-        logger.info(msg, args);
+        if (logger.isInfoEnabled()) {
+            String message = getMassage(msg, args);
+            logger.info(message);
+        }
     }
 
     @Override
@@ -100,7 +92,10 @@ public class Slf4jReporter implements IReporter{
 
     @Override
     public void warn(String msg, Object... args) {
-        logger.warn(msg, args);
+        if (logger.isWarnEnabled()) {
+            String message = getMassage(msg, args);
+            logger.warn(message);
+        }
     }
 
     @Override
@@ -115,7 +110,10 @@ public class Slf4jReporter implements IReporter{
 
     @Override
     public void error(String msg, Object... args) {
-        logger.error(msg, args);
+        if (logger.isErrorEnabled()) {
+            String message = getMassage(msg, args);
+            logger.error(message);
+        }
     }
 
     @Override
@@ -131,5 +129,9 @@ public class Slf4jReporter implements IReporter{
     @Override
     public void ignoredException(Exception ex) {
         trace("Ignored exception", ex);
+    }
+
+    private String getMassage(String format, Object... args) {
+        return String.format(format, args);
     }
 }

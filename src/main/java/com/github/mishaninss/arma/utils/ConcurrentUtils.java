@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.mishaninss.utils;
+package com.github.mishaninss.arma.utils;
 
 import java.util.concurrent.*;
 

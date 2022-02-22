@@ -15,18 +15,30 @@
  * limitations under the License.
  */
 
-package com.github.mishaninss.exceptions;
+package com.github.mishaninss.arma.utils;
 
-public class FrameworkConfigurationException extends RuntimeException {
-    public FrameworkConfigurationException(String message) {
-        super(message);
-    }
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public FrameworkConfigurationException(String template, Object... args) {
-        super(String.format(template, args));
-    }
+import java.util.concurrent.TimeUnit;
 
-    public FrameworkConfigurationException(String message, Throwable cause) {
-        super(message, cause);
-    }
+public class GenericUtils {
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenericUtils.class);
+	
+	private GenericUtils() {
+	}
+	
+	public static void pause(int sec) {
+		pause(TimeUnit.SECONDS, sec);
+	}
+
+	public static void pause(TimeUnit timeUnit, int timeout) {
+		try {
+			Thread.sleep(timeUnit.toMillis(timeout));
+		} catch (InterruptedException e) {
+			LOGGER.trace("Interrupted sleep", e);
+            Thread.currentThread().interrupt();
+		}
+	}
+	
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.mishaninss.reporting;
+package com.github.mishaninss.arma.reporting;
 
 public interface IReporter {
     String QUALIFIER = "IReporter";
