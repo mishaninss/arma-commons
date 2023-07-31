@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +42,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -261,6 +262,26 @@ public class CsvDataExtractor {
       });
     }
     saveMapToCsvFile(path, dataAsMap);
+  }
+
+  public static <T> void saveListOfObjectsToCsvFile(String path, List<T> data) {
+    var list = data.stream()
+        .map(o -> {
+          Map<String, String> map = new HashMap<>();
+          var fields = FieldUtils.getAllFieldsList(o.getClass());
+          fields.forEach(f -> {
+            try {
+              Object value = FieldUtils.readField(f, o, true);
+              map.put(f.getName(), value != null ? value.toString() : null);
+            } catch (IllegalAccessException e) {
+              throw new RuntimeException(e);
+            }
+          });
+          return map;
+        })
+        .collect(Collectors.toList());
+
+    saveListOfMapsToCsvFile(path, list);
   }
 
   public static void saveMapToCsvFile(String path, Map<String, List<String>> allLines,

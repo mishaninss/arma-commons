@@ -14,6 +14,7 @@ public class Test {
   public static void main(String[] args) {
     var listX = CsvDataExtractor.extractDataAsListOfObjects("/Users/ssmishanin/arma/arma-commons/src/main/resources/baseline.csv", Entity.class);
     var listY = CsvDataExtractor.extractDataAsListOfObjects("/Users/ssmishanin/arma/arma-commons/src/main/resources/baseline_err.csv", Entity.class);
+    CsvDataExtractor.saveListOfObjectsToCsvFile("out.csv",listX);
 
     var checker = new ObjectChecker()
         .as("Entity")
