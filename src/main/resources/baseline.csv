@@ -1,0 +1,8 @@
+id, name, isActive
+1, Test1, false
+2, Test2, false
+3, Test3, true
+4, Test1, false
+5, Test2, false
+6, Test3, true
+6, Test3, true
