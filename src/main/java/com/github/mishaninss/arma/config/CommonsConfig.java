@@ -26,11 +26,14 @@ import java.util.List;
 import java.util.Properties;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -41,6 +44,9 @@ import org.springframework.core.io.Resource;
             value = {Configuration.class})
     })
 public class CommonsConfig {
+
+  @Autowired
+  private Environment environment;
 
   private static final String ARMA_PROPERTIES_FILE = "arma.properties";
   private static final String ARMA_CONFIG_FILES_PROPERTY = "arma.config.files";
